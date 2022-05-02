@@ -19,16 +19,19 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 class ChessServiceTest {
 
     private FakeBoardDao fakeBoardDao = new FakeBoardDao();
-    private ChessService chessService = new ChessService(fakeBoardDao, new FakeGameDao(), new BCryptPasswordEncoder());
+    private PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+    private ChessService chessService = new ChessService(fakeBoardDao, new FakeGameDao(), passwordEncoder);
+
     private int gameId;
 
     @BeforeEach
     void init() {
-        gameId = chessService.start(new GameCreateDto("test", "password"));
+        gameId = chessService.start(new GameCreateDto("test", passwordEncoder.encode("password")));
     }
 
     @AfterEach

@@ -2,6 +2,8 @@ package chess.domain.board;
 
 import static org.assertj.core.api.Assertions.*;
 
+import chess.exception.NotMovableException;
+import chess.exception.PieceNotFoundException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -19,7 +21,7 @@ public class BoardTest {
         Board board = Board.create();
 
         assertThatThrownBy(() -> board.move("a3", "a4"))
-                .isInstanceOf(IllegalArgumentException.class)
+                .isInstanceOf(PieceNotFoundException.class)
                 .hasMessageContaining("해당 위치에 말이 존재하지 않습니다.");
     }
 
@@ -29,7 +31,7 @@ public class BoardTest {
         Board board = Board.create();
 
         assertThatThrownBy(() -> board.move("a1", "a4"))
-                .isInstanceOf(IllegalArgumentException.class)
+                .isInstanceOf(NotMovableException.class)
                 .hasMessageContaining("해당 위치로 움직일 수 없습니다.");
     }
 
